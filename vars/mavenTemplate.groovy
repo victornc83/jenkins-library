@@ -6,6 +6,11 @@ def call(namespace, body){
       namespace: '${namespace}',
       containers: [containerTemplate(name: 'maven', image: 'openshift/jenkins-slave-maven-centos7', args: '${computer.jnlpmac} ${computer.name}')]
       ) {
-        body()
+        node('maven-node'){
+          container('maven'){
+              body()
+          }
+        }
+
       }
 }
