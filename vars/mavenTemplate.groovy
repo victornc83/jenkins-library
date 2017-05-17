@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-def call(namespace){
+def call(namespace, body){
     podTemplate(name: 'maven',
       label: 'maven',
       cloud: 'openshift',
