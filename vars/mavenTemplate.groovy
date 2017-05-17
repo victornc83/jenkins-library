@@ -1,16 +1,14 @@
 #!/usr/bin/groovy
 
 def call(namespace, body){
-    podTemplate(label: 'maven-node',
+    podTemplate(name: 'maven',
+      label: 'maven',
       cloud: 'openshift',
       namespace: '${namespace}',
-      containers: [containerTemplate(name: 'maven', image: 'openshift/jenkins-slave-maven-centos7', args: '${computer.jnlpmac} ${computer.name}')]
+      containers: [containerTemplate(name: 'maven', image: 'openshift/jenkins-slave-maven-centos7', ttyEnabled: true, args: '${computer.jnlpmac} ${computer.name}')]
       ) {
-        node('maven-node'){
-          container('maven'){
-              body()
-          }
+        node('maven'){
+            body()
         }
-
       }
 }
