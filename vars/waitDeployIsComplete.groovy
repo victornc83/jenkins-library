@@ -5,11 +5,9 @@ def call(project, app){
     timeout(time: 2, unit: 'MINUTES') {
       waitUntil{
         def output = sh script: '''
-        export out=1
-        for e in $(oc get dc ${app} --template '{{range .status.conditions}}{{.status|println}}{{end}}') ; do
-          if [ "${e}" != "False" ] ; then return test 1 -gt 1 ; fi
+        for e in $(oc get dc "${app}" --template '{{range .status.conditions}}{{.status|println}}{{end}}') ; do
+          if [ "${e}" != "False" ] ; then return 1 ; fi
         done
-        return ${out}
         ''', returnOutput: true
       }
     }
