@@ -6,7 +6,7 @@ def call(project, app){
       waitUntil{
         sh "oc get dc ${app} --template '{{range .status.conditions}}{{.status|println}}{{end}}' > status"
         def output = sh script:'''
-        for line in `cat status` ; do if [ ${l} != "True" ] ; then return 1 ; fi ; done
+        for line in `cat status` ; do if [ ${line} != "True" ] ; then return 1 ; fi ; done
         ''', returnStatus: true
         return (output==0)
       }
