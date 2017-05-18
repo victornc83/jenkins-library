@@ -2,7 +2,7 @@
 
 def call(project, app){
   loginOpenshift(project){
-    waitDeployIsComplete('stage','app')
+    waitDeployIsComplete(project, app)
     sh '''
     export host=$(oc get svc ${app} --template='{{.spec.clusterIP}}')
     export port=$(oc get svc ${app} --template='{{range .spec.ports}}{{.port}}{{end}}')
