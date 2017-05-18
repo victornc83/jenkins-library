@@ -10,7 +10,8 @@ def call(body){
   def params = ''
   loginOpenshift(config.project){
     for(int i = 0; i<config.parameters.size();i++){
-      params = params + '-p ' + config.parameters[i] + '=' + config.values[i]
+      params = params + '-p ' + config.parameters[i] + '=' + config.values[i] + ' '
     }
+    sh "oc new-app --template=${config.template} ${params}"
   }
 }
