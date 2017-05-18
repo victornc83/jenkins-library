@@ -3,7 +3,7 @@
 def call(project, app){
   loginOpenshift(project){
     timeout(time: 2, unit: 'MINUTES') {
-      retry(){
+      waitUntil{
         def output = sh script: '''
         export out=1
         for e in $(oc get dc ${app} --template '{{range .status.conditions}}{{.status|println}}{{end}}') ; do
@@ -13,7 +13,6 @@ def call(project, app){
         done
         return ${out}
         ''', returnOutput: true
-        return output
       }
     }
   }
