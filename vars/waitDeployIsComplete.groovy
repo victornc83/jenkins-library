@@ -7,7 +7,7 @@ def call(project, app){
         def output = sh script: '''
         export out=1
         for e in $(oc get dc ${app} --template '{{range .status.conditions}}{{.status|println}}{{end}}') ; do
-          if [ "${e}" != "True" ] ; then
+          if [ "${e}" != "False" ] ; then
             out=0
           fi
         done
