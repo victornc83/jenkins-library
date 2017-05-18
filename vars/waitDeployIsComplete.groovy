@@ -5,7 +5,9 @@ def call(project, app){
     timeout(time: 2, unit: 'MINUTES') {
       waitUntil{
         sh "oc get dc ${app} --template '{{range .status.conditions}}{{.status|println}}{{end}}' > status"
-        sh "for l in `cat status` ; do if [ ${l} != "True" ] ; then return 1 ; fi ; done"
+        sh '''
+        for line in `cat status` ; do if [ ${l} != "True" ] ; then return 1 ; fi ; done
+        '''
       }
     }
   }
