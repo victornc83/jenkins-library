@@ -12,7 +12,7 @@ def call(project, app){
           fi
         done
         return ${out}
-        ''', returnStatus: true
+        ''', returnOutput: true
         return output
       }
     }
