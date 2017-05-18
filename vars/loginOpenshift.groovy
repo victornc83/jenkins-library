@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-def call(project, body){
+def call(project){
   withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'openshift', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
       sh "oc login --insecure-skip-tls-verify=true -u $env.USERNAME -p $env.PASSWORD $OPENSHIFT"
   }
