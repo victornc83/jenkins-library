@@ -4,8 +4,7 @@ def call(project, app){
   loginOpenshift(project){
     timeout(time: 2, unit: 'MINUTES') {
       waitUntil{
-        sh "export status=`oc get dc ${app} --template '{{range .status.conditions}}{{.status|println}}{{end}}'`"
-        sh "for e in `echo $status` ; do echo ${e} ;if [ "${e}" != "False" ] ; then echo false ; fi ; done"
+        sh "oc get dc ${app} --template '{{range .status.conditions}}{{.status|println}}{{end}}' | while read line ; do if [ $line != "True" ] ; then return 1 ; fi ; done"
       }
     }
   }
