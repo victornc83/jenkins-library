@@ -5,7 +5,7 @@ def call(project, body){
       label: 'maven',
       cloud: "openshift-${project}",
       namespace: project,
-      containers: [containerTemplate(name: 'jnlp', image: 'openshift/jenkins-slave-maven-centos7', workingDir: '/tmp', args: '${computer.jnlpmac} ${computer.name}')]
+      containers: [containerTemplate(name: 'jnlp', image: 'openshift/jenkins-slave-maven-centos7', ttyEnabled: true, workingDir: '/tmp', args: '${computer.jnlpmac} ${computer.name}')]
       ) {
         node('maven'){
             body()
