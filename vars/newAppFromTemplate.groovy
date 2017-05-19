@@ -8,12 +8,12 @@ def call(body){
   body()
 
   def params = ''
-  loginOpenshift(config.project){
+  //loginOpenshift(config.project){
     sh "oc project"
     for(int i = 0; i<config.parameters.size();i++){
       params = params + '-p ' + config.parameters[i] + '=' + config.values[i] + ' '
     }
     sh "oc new-app --template=${config.template} ${params} -n ${config.project}"
     sh "oc project"
-  }
+  //}
 }
