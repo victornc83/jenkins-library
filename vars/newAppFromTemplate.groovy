@@ -9,6 +9,7 @@ def call(body){
 
   def params = ''
   loginOpenshift(config.project){
+    sh "oc project"
     for(int i = 0; i<config.parameters.size();i++){
       params = params + '-p ' + config.parameters[i] + '=' + config.values[i] + ' '
     }
