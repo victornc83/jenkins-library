@@ -14,5 +14,6 @@ def call(body){
       params = params + '-p ' + config.parameters[i] + '=' + config.values[i] + ' '
     }
     sh "oc new-app --template=${config.template} ${params}"
+    sh "oc project"
   }
 }
