@@ -12,7 +12,7 @@ def call(body){
     for(int i = 0; i<config.parameters.size();i++){
       params = params + '-p ' + config.parameters[i] + '=' + config.values[i] + ' '
     }
-    def = exist = sh("oc get dc ${config.name} -n ${config.project}",returnStatus: true)
+    def exist = sh("oc get dc ${config.name} -n ${config.project}",returnStatus: true)
     if (!exist){
       sh "oc process openshift//${config.template} ${params} | oc replace ${config.name} -n ${config.project} -f -"
     }else{
