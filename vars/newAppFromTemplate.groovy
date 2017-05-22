@@ -13,7 +13,7 @@ def call(body){
       params = params + '-p ' + config.parameters[i] + '=' + config.values[i] + ' '
     }
     def exist = sh(script:'''
-      oc get dc "${config.name} -n ${config.project}"
+      oc get dc "${config.name}" -n "${config.project}"
     ''', returnStatus: true)
     if (!exist){
       sh "oc process openshift//${config.template} ${params} | oc replace ${config.name} -n ${config.project} -f -"
