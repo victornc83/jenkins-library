@@ -14,7 +14,7 @@ def call(body){
     }
     def exist = sh(script:"oc get dc ${config.name} -n ${config.project}",returnStatus: true)
     if (!exist){
-      sh "oc process openshift//${config.template} ${params} | oc replace --force -n ${config.project} -f - " 
+      sh "oc process openshift//${config.template} ${params} | oc replace -n ${config.project} -f - 2>&1 | grep -v Service"
     }else{
       sh "oc new-app --name=${config.name} --template=${config.template} ${params} -n ${config.project}"
     }
