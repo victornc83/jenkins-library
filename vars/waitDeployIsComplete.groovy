@@ -6,7 +6,7 @@ def call(project, app){
       waitUntil{
         sh "oc get rc myapp-\$(oc get dc ${app} --template={{.status.latestVersion}}) --template={{.status.readyReplicas}} > status"
         def output = sh script:'''
-        for line in `cat status` ; do [ ${line} != "1" ] ; done
+        for line in `cat status` ; do [ ${line} == "1" ] ; done
         ''', returnStatus: true
         return (output==0)
       }
