@@ -16,9 +16,9 @@ def call(body){
     def noexist = sh(script:"oc get route ${name} -n ${project}",returnStatus: true)
     if(noexist){
       if (hostname == ''){
-        sh "oc expose --name=${name} svc ${service}"
+        sh "oc expose --name=${name} svc ${service} -n ${project}"
       } else {
-        sh "oc expose --name=${name} svc ${service} --hostname=${hostname}"
+        sh "oc expose --name=${name} svc ${service} --hostname=${hostname} -n ${project}"
       }
     } else {
       sh "oc patch route/${name} -p '{\"spec\": {\"to\": {\"name\": \"${service}\" }}}' -n ${project}"
