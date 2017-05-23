@@ -1,6 +1,30 @@
 #!/usr/bin/groovy
 
-def call(project, name, service){
-  loginOpenshift(project){
+def call(body){
+
+  def config = [:]
+  body.resolveStrategy = Closure.DELEGATE_FIRST
+  body.delegate = config
+  body()
+
+  def name = config.name
+  def project = config.project
+  def service = config.service
+  def hostname = config.hostname ?: ''
+
+  loginOpenshift(config.project){
+    def exist = sh(script:"oc get route ${name} -n ${project}",returnStatus: true)
+    if(!exist){
+      if (hostname == ''){
+        sh "oc expose --name=${name} svc ${service}"
+      } else {
+        sh "oc expose --name=${name} svc ${service} --hostname=${hostname}"
+      }
+    } else {
+      sh "oc patch route/${name} -p '{\"spec\": {\"to\": {\"name\": \"${service}\" }}}' -n ${project}"
+      if(hostname != ''){
+        sh "oc patch route/${name} -p '{\"spec\": {\"host\": \"${hostname}\" }}' -n ${project}"
+      }
+    }
   }
 }
