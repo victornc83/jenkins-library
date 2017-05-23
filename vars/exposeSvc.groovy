@@ -13,8 +13,8 @@ def call(body){
   def hostname = config.hostname ?: ''
 
   loginOpenshift(config.project){
-    def exist = sh(script:"oc get route ${name} -n ${project}",returnStatus: true)
-    if(!exist){
+    def noexist = sh(script:"oc get route ${name} -n ${project}",returnStatus: true)
+    if(noexist){
       if (hostname == ''){
         sh "oc expose --name=${name} svc ${service}"
       } else {
