@@ -10,7 +10,7 @@ def call(project, body){
       containers: [
         containerTemplate(
           name: 'jnlp',
-          image: 'openshift/jenkins-slave-nodejs-centos7',
+          image: 'victornc83/jenkins-slave-nodejs-centos7',
           ttyEnabled: true,
           workingDir: '/tmp',
           args: '${computer.jnlpmac} ${computer.name}',
