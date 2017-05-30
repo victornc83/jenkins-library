@@ -6,7 +6,7 @@ def call(project, body){
       label: 'maven',
       cloud: "openshift",
       namespace: project,
-      envVars: []
+      envVars: [],
       containers: [
         containerTemplate(
           name: 'jnlp',
