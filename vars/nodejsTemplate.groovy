@@ -2,15 +2,15 @@
 
 def call(project, body){
     podTemplate(
-      name: 'maven',
-      label: 'maven',
+      name: 'nodejs',
+      label: 'nodejs',
       cloud: "openshift",
       namespace: project,
       envVars: []
       containers: [
         containerTemplate(
           name: 'jnlp',
-          image: 'openshift/jenkins-slave-maven-centos7',
+          image: 'openshift/jenkins-slave-nodejs-centos7',
           ttyEnabled: true,
           workingDir: '/tmp',
           args: '${computer.jnlpmac} ${computer.name}',
@@ -18,7 +18,7 @@ def call(project, body){
         )
       ]
     ) {
-        node('maven'){
+        node('nodejs'){
             body()
         }
       }
