@@ -9,7 +9,7 @@ def call(body){
 
   def name = config.name
   def project = config.project
-  def service = config.service
+  def service = config.service ?: config.name
   def hostname = config.hostname ?: ''
 
   loginOpenshift(config.project){
