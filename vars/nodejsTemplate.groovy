@@ -19,6 +19,7 @@ def call(project, body){
       ]
     ) {
         node('nodejs'){
+            def namespace = project
             body()
         }
       }

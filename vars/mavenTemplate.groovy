@@ -19,6 +19,7 @@ def call(project, body){
       ]
     ) {
         node('maven'){
+            def namespace = project
             body()
         }
       }
