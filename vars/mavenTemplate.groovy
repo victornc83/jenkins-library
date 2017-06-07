@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-def call(project, body){
+def call(project,body){
     podTemplate(
       name: 'maven',
       label: 'maven',
@@ -19,8 +19,9 @@ def call(project, body){
       ]
     ) {
         node('maven'){
-            def namespace = project
-            body()
+            withEnv(["NAMESPACE=${project}"]){
+                body()
+            }
         }
       }
 }

@@ -19,8 +19,9 @@ def call(project, body){
       ]
     ) {
         node('nodejs'){
-            def namespace = project
-            body()
+          withEnv(["NAMESPACE=${project}"]){
+              body()
+          }
         }
       }
 }
